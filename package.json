@@ -1,9 +1,10 @@
 {
   "name": "mvp-petpickup",
   "version": "0.0.1",
-  "description": "PetPickup projuect of Dept of Agri in Oahu",
-  "main": "index.html",
+  "description": "PetPickup project of Dept of Agri in Oahu",
+  "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,8 +19,9 @@
   "bugs": {
     "url": "https://github.com/HACC2021/MVP/issues"
   },
-  "homepage": "https://github.com/HACC2021/MVP#readme",
+  "homepage": "https://github.com/HACC2021/MVP",
   "dependencies": {
+    "express": "^4.17.1",
     "express.js": "^1.0.0"
   }
 }
