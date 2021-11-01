@@ -1,0 +1,25 @@
+{
+  "name": "mvp-petpickup",
+  "version": "0.0.1",
+  "description": "PetPickup projuect of Dept of Agri in Oahu",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HACC2021/MVP.git"
+  },
+  "keywords": [
+    "petpickup"
+  ],
+  "author": "team-mvp",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/HACC2021/MVP/issues"
+  },
+  "homepage": "https://github.com/HACC2021/MVP#readme",
+  "dependencies": {
+    "express.js": "^1.0.0"
+  }
+}
