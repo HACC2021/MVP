@@ -10,3 +10,7 @@ npm-debug.log
 # Docker
 Dockerfile
 docker-compose.yml
+
+# Google API Things
+google-credentials.json
+token.json
