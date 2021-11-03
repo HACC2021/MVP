@@ -49,5 +49,5 @@ npm install # Install the required npm modules
 npm start
 ```
 
-#### Advances 
-* Setup access to the Google API Client(s)[docs/sheets/setup]
+#### Advanced
+* Setup access to the [Google API Client(s)](docs/sheets/setup.md)
