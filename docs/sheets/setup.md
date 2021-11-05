@@ -34,6 +34,7 @@ You should be prompted with the following prompt:
 
 5. Copy the code from the url
 > The redirected url should look something like `http://localhost:5000?code=...&client_id=...`
+> 
 > The generated code from the URL may contain special URL encoded characters.  
 > So go to https://www.urldecoder.io/ and decode the string, then paste it back into the terminal.
 > Make sure you do not copy the `&` symbol, as that is not apart of the code.
