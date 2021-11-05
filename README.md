@@ -34,6 +34,8 @@ When the owners arrive for the pickup, the Quarantine Admins will remove the per
 While on site, a TV screen will display the current queue.  So the owners can be asured they are being listed and an estimate on how long it takes to pickup the pet.
 Any persons who did not register through the forms will not be allowed to pickup their pets.
 
+##Actual google-crednetials.json file needs to be requested from developers.
+
 ### Technical Details 
 This repository hosts files needed to get the existing Pet Owner Form created from Google Spreadsheets.
 The data within the spreadsheet will act as the main database for all pet owner and queue entries.
