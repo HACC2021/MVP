@@ -5,7 +5,7 @@ const TOKEN_PATH = path.resolve(__dirname, '..', '..', 'token.json');
 const CREDENTIALS_PATH = path.resolve(__dirname, '..', '..', 'google-credentials.json');
 
 const SPREADSHEET_ID = '13Enx9yXIjUpO3Tl1S8-OvJ8f6htDbNlqh3rDdf93JcA';
-const SPREADSHEET_RANGE = 'Form Responses';
+const SPREADSHEET_RANGE = 'Form';
 
 module.exports = {
     SCOPES,
