@@ -1,0 +1,1 @@
+$("#txtToday").innerHTML = "<b>" + Date.now() + "</b>" ;
