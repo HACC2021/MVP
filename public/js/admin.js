@@ -1,1 +1,2 @@
-$("#txtToday").innerHTML = "<b>" + Date.now() + "</b>" ;
+var cDate = new Date();
+$("#txtToday").innerHTML = "<b>" + cDate.toString() + "</b>" ;

@@ -19,7 +19,6 @@
     <script src="dist/bootstrap.min.js"></script>
     <script src="js/draggable.js"></script>
     <script src="js/admin.js"></script>
-    <script src="js/list.js"></script>
     <style>
         body{ height:100vh; margin:0; }
 
@@ -99,9 +98,93 @@
         <div class="container justify-content-center">
             <table class="table table-striped" id="table">
                 <thead>
-                    <tr id="table_headers"></tr>
+                    <th scope="col" data-type="number">#</th>
+                    <th scope="col">Pet Microchip ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Pet Check In Time</th>
+                    <th scope="col" width="100px">Action</th>
                 </thead>
-                <tbody id="table_body"></tbody>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>
+                            1234ABCDEFG
+                        </td>
+                        <td>
+                            John
+                        </td>
+                        <td>
+                            Smith
+                        </td>
+                        <td>
+                            10/1/2021 11:00:00 HST
+                        </td>
+                        <td>
+                            <i class="bi bi-envelope-fill" style="font-size:24px"></i>
+                            <i class="bi bi-trash" style="font-size:24px"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>
+                            155634ABCD123
+                        </td>
+                        <td>
+                            Satoshi
+                        </td>
+                        <td>
+                            Nakamoto
+                        </td>
+                        <td>
+                            10/1/2021 11:12:00 HST
+                        </td>
+                        <td>
+                            <i class="bi bi-envelope-fill" style="font-size:24px"></i></i>
+                            <i class="bi bi-trash" style="font-size:24px"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>
+                            45465DGHG65A
+                        </td>
+                        <td>
+                            Jungjae
+                        </td>
+                        <td>
+                            Lee
+                        </td>
+                        <td>
+                            10/1/2021 11:42:00 HST
+                        </td>
+                        <td>
+                            <i class="bi bi-envelope-fill" style="font-size:24px"></i></i>
+                            <i class="bi bi-trash" style="font-size:24px"></i>
+                        </td>
+                    </tr>
+                    <div class="unlisted">
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>
+                                45465DGHG65A
+                            </td>
+                            <td>
+                                Neo
+                            </td>
+                            <td>
+                                Anderson
+                            </td>
+                            <td>
+                                10/1/2021 12:12:00 HST
+                            </td>
+                            <td>
+                                <i class="bi bi-envelope-fill" style="font-size:24px"></i></i>
+                                <i class="bi bi-trash" style="font-size:24px"></i>
+                            </td>
+                        </tr>
+                    </div>
+                </tbody>
             </table>
             </div>
             <div class="container  justify-content-center">
@@ -144,9 +227,6 @@
                 <th scope="col">${Object.keys(data[0])[i]}</th>
             `);
         }
-        headers = headers.add(`
-                <th scope="col">Action</th>
-            `);
 
         $('#table_headers').append(headers);
 
@@ -159,10 +239,6 @@
                     <td>${Object.values(data[i])[j]}</td>
                 `);
             }
-            bodies = bodies.add(`
-                    <i class="bi bi-envelope-fill" style="font-size:24px"></i>
-                    <i class="bi bi-trash" style="font-size:24px"></i>
-            `);
             bodies = bodies.add(`</tr>`);
         }
 
