@@ -24,6 +24,7 @@
             box-shadow: 0 0 13px 0 rgba(236, 236, 241, .44);
         }
     </style>
+    <script src="js/list.js"></script>
 </head>
 
 <body>
@@ -78,57 +79,9 @@
                         <div class="table-responsive project-list">
                             <table class="table project-table table-centered table-nowrap">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Owner name</th>
-                                        <th scope="col">Start Date/Time </th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Pets</th>
-                                    </tr>
+                                    <tr id="table_headers"></tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <td>Lightning McQueen</td>
-                                        <td>11/2/2021</td>
-                                        <td>
-                                            <span class="text-success font-12"><i
-                                                    class="mdi mdi-checkbox-blank-circle mr-1"></i> Completed</span>
-                                        </td>
-                                        <td>
-                                            <i class="fas fa-fish"></i>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>2</th>
-                                        <td>Barry Allen</td>
-                                        <td>11/2/2021</td>
-                                        <td>
-                                            <span class="text-primary font-12"><i
-                                                    class="mdi mdi-checkbox-blank-circle mr-1"></i> Pending</span>
-                                        </td>
-                                        <td>
-                                            <i class="fas fa-dog"></i>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>3</th>
-                                        <td>David Ige</td>
-                                        <td>11/2/2021</td>
-                                        <td>
-                                            <span class="text-success font-12"><i
-                                                    class="mdi mdi-checkbox-blank-circle mr-1"></i> Completed</span>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <i class="fas fa-dog"></i>
-                                                <i class="fas fa-cat"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="table_body"></tbody>
                             </table>
                         </div>
                         <!-- end project-list -->
@@ -138,6 +91,52 @@
         </div>
         <!-- end row -->
     </div>
+
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+    <script>
+
+        (async () => {
+            displayData(await fetchData());
+        })(); // Run once immediately on page load
+
+        setInterval(async () =>{
+            displayData(await fetchData());
+        }, 10000); // Poll for new data every 10s
+
+        function displayData(data) {
+            if (!data) return;
+
+            $('#table_headers').empty();
+            $('#table_body').empty();
+
+            let headers = $();
+
+            for (let i = 0; i < Object.keys(data[0]).length; i++) {
+                headers = headers.add(`
+                    <th scope="col">${Object.keys(data[0])[i]}</th>
+                `);
+            }
+
+            $('#table_headers').append(headers);
+
+            let bodies = $();
+
+            for (let i = 0; i < data.length; i++) {
+                bodies = bodies.add(`<tr>`);
+                for (let j = 0; j < Object.values(data[i]).length; j++) {
+                    bodies = bodies.add(`
+                        <td>${Object.values(data[i])[j]}</td>
+                    `);
+                }
+                bodies = bodies.add(`</tr>`);
+            }
+
+            $('#table_body').append(bodies);
+        }
+    </script>
 
 </body>
 
