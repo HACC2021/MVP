@@ -10,6 +10,7 @@ const app = express();
 const { CREDENTIALS_PATH } = require('./src/sheets/index');
 const { authorize } = require('./src/sheets/auth');
 const { listResponses } = require('./src/sheets/list');
+const { transformList } = require('./src/sheets/transform');
 
 let googleAuthClient = {}; // Store the Authorized Google Auth Client
 
@@ -21,8 +22,6 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
   authorize(JSON.parse(content), (client) => googleAuthClient = client);
 });
 
-app.get('/data', async (req, res) => {
-    return res.json(await listResponses(googleAuthClient));
-});
+app.get('/data', async (req, res) => res.json(transformList(await listResponses(googleAuthClient))));
 
 app.listen(PORT, () => console.log(`Listening on http://localhost:${ PORT }`));
