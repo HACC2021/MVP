@@ -1,8 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
+const bodyParser = require('body-parser');
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 
+require('dotenv').config(); // Initialize .env config variables
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -12,9 +15,13 @@ const { authorize } = require('./src/sheets/auth');
 const { listResponses } = require('./src/sheets/list');
 const { transformList } = require('./src/sheets/transform');
 
+const { sendMail } = require('./src/mailer/sendMail');
+
 let googleAuthClient = {}; // Store the Authorized Google Auth Client
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: '15mb' }));
 
 fs.readFile(CREDENTIALS_PATH, (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
@@ -24,4 +31,15 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
 
 app.get('/data', async (req, res) => res.json(transformList(await listResponses(googleAuthClient))));
 
-app.listen(PORT, () => console.log(`Listening on http://localhost:${ PORT }`));
+app.post('/notify', body('email').isEmail(), async (req, res) => {
+  const { email } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  return res.send(await sendMail(email));
+});
+
+app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
