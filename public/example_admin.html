@@ -95,22 +95,34 @@
                 { data: 'Pet Microchip Number' },
                 { data: 'Pet Owner Name / Authorized Handler' },
                 { data: 'Phone Number' },
-                { data: 'Email Address' },
+                { data: 'Email Address', className: 'email_address' },
                 { data: 'Cell service provider' },
                 {
                     data: null,
-                    className: "dt-center", 
+                    className: "dt-center editor-email",
                     defaultContent: '<i style="cursor: pointer;" class="fa fa-envelope" />',
                     orderable: false
                 }
             ],
             select: true,
             buttons: [
-                { extend: "edit", editor },
-                { extend: "remove", editor },
                 'pdf',
                 'excel'
             ]
+        });
+
+        $('#example').on('click', 'td.editor-email', function (e) {
+            e.preventDefault();
+
+            const email = $(this).closest('tr').find('.email_address');
+            fetch('/notify', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email.text() })
+            });
         });
     });
 
