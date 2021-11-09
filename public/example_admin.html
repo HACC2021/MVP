@@ -35,7 +35,8 @@
                     <th>Phone Number</th>
                     <th>Email Address</th>
                     <th>Cell Service Provider</th>
-                    <th>Notify by Email</th>
+                    <th>Email</th>
+                    <th>SMS</th>
                 </tr>
             </thead>
             <tfoot>
@@ -46,7 +47,8 @@
                     <th>Phone Number</th>
                     <th>Email Address</th>
                     <th>Cell Service Provider</th>
-                    <th>Notify by Email</th>
+                    <th>Email</th>
+                    <th>SMS</th>
                 </tr>
             </tfoot>
         </table>
@@ -94,13 +96,19 @@
                 { data: 'Timestamp' },
                 { data: 'Pet Microchip Number' },
                 { data: 'Pet Owner Name / Authorized Handler' },
-                { data: 'Phone Number' },
+                { data: 'Phone Number', className: 'phone_number' },
                 { data: 'Email Address', className: 'email_address' },
                 { data: 'Cell service provider' },
                 {
                     data: null,
                     className: "dt-center editor-email",
                     defaultContent: '<i style="cursor: pointer;" class="fa fa-envelope" />',
+                    orderable: false
+                },
+                {
+                    data: null,
+                    className: "dt-center editor-sms",
+                    defaultContent: '<i style="cursor: pointer;" class="fa fa-comment-alt" />',
                     orderable: false
                 }
             ],
@@ -122,6 +130,20 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ email: email.text() })
+            });
+        });
+
+        $('#example').on('click', 'td.editor-sms', function (e) {
+            e.preventDefault();
+
+            const phoneNumber = $(this).closest('tr').find('.phone_number');
+            fetch('/sms', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ phoneNumber: phoneNumber.text() })
             });
         });
     });

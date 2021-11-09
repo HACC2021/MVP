@@ -51,3 +51,5 @@ npm start
 #### Advanced Setup Guides
 * Setup access to the [Google API Client(s)](docs/sheets/setup.md)
 * [Enable email sending using Nodemailer](docs/mailer/setup.md)
+* [Enable SMS sending using Twilio](docs/twilio/setup.md)
+

@@ -16,6 +16,7 @@ const { listResponses } = require('./src/sheets/list');
 const { transformList } = require('./src/sheets/transform');
 
 const { sendMail } = require('./src/mailer/sendMail');
+const { sendSMS } = require('./src/twilio/sendSMS');
 
 let googleAuthClient = {}; // Store the Authorized Google Auth Client
 
@@ -40,6 +41,17 @@ app.post('/notify', body('email').isEmail(), async (req, res) => {
   }
 
   return res.send(await sendMail(email));
+});
+
+app.post('/sms', body('phoneNumber').isMobilePhone(), async (req, res) => {
+  const { phoneNumber } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  return res.send(await sendSMS(phoneNumber));
 });
 
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

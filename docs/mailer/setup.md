@@ -4,6 +4,7 @@ This guide walks through how to enable access to programmatically query send ema
 
 ## End State
 * A `.env` file located at the root of this project's file structure
+> Relevant .env fields: `GOOGLEACC_USER`, `GOOGLEACC_PASS`
 * The `http://localhost:5000/notify` route sending notification emails to a valid `email` field on valid `POST` requests.
 
 ![Example Email Notification](imgs/example_email.png)
