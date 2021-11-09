@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="dist/datatables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="dist/datatables.min.js"></script>
 </head>
 
@@ -123,13 +124,26 @@
             e.preventDefault();
 
             const email = $(this).closest('tr').find('.email_address');
-            fetch('/notify', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email: email.text() })
+
+            Swal.fire({
+                title: `Are you sure you want to send an email notification to "${email.text()}"?`,
+                showDenyButton: true,
+                confirmButtonText: 'Send',
+                denyButtonText: `Don't send`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Email notification sent!', '', 'success');
+                    fetch('/notify', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email: email.text() })
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Email notification has not been sent', '', 'info');
+                }
             });
         });
 
@@ -137,13 +151,26 @@
             e.preventDefault();
 
             const phoneNumber = $(this).closest('tr').find('.phone_number');
-            fetch('/sms', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ phoneNumber: phoneNumber.text() })
+
+            Swal.fire({
+                title: `Are you sure you want to send an SMS notification to "${phoneNumber.text()}"?`,
+                showDenyButton: true,
+                confirmButtonText: 'Send',
+                denyButtonText: `Don't send`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('SMS notification sent!', '', 'success');
+                    fetch('/sms', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ phoneNumber: phoneNumber.text() })
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('SMS notification has not been sent', '', 'info');
+                }
             });
         });
     });
