@@ -17,12 +17,13 @@ const defaultMailOptions = {
     text: 'Please come in to the office as your pet is ready for pickup. Mahalo.'
 };
 
-async function sendMail(email) {
+async function sendMail(email, opts={}) {
     if (!email) return;
 
     return new Promise((resolve, reject) => {
         transporter.sendMail({
             ...defaultMailOptions,
+            ...opts,
             to: email
         }, (error, info) => {
             if (error) {

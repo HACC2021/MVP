@@ -55,4 +55,30 @@ app.post('/sms', body('phoneNumber').isMobilePhone(), async (req, res) => {
   return res.send(await sendSMS(phoneNumber));
 });
 
+app.post('/smsoveremail', body('phoneNumber').isMobilePhone(), async (req, res) => {
+  const { phoneNumber, cellProvider } = req.body;
+
+  const cellProviderMap = {
+    'AT&T': '@txt.att.net',
+    'Boost Mobile': '@smsmyboostmobile.com',
+    'US Cellular': '@email.uscc.net',
+    'T-Mobile': '@tmomail.net',
+    'Sprint': '@messaging.sprintpcs.com',
+    'Verizon': '@vtext.com'
+  };
+
+  if (!cellProviderMap[cellProvider]) return res.status(400).json({error: true});
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  return res.send(await sendMail(
+    `${phoneNumber}${cellProviderMap[cellProvider]}`, {
+      'subject': 'Hawaii Annual Code Challenge - Team MVP'
+    }
+  ));
+});
+
 app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

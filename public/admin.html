@@ -39,6 +39,7 @@
                     <th>Cell Service Provider</th>
                     <th>Email</th>
                     <th>SMS</th>
+                    <th>SMS over Email</th>
                 </tr>
             </thead>
             <tfoot>
@@ -52,6 +53,7 @@
                     <th>Cell Service Provider</th>
                     <th>Email</th>
                     <th>SMS</th>
+                    <th>SMS over Email</th>
                 </tr>
             </tfoot>
         </table>
@@ -96,7 +98,6 @@
             ajax: {
                 url: '/data',
                 dataSrc: (data) => {
-                    console.log(data);
                     let deletedRows = localStorage.getItem('deletedRows') || [];
                     if (typeof deletedRows === 'string') {
                         deletedRows = JSON.parse(deletedRows);
@@ -115,13 +116,13 @@
                 }
             },
             columns: [
-                { "data": null, defaultContent: "N/A" },
+                { "data": null, defaultContent: "N/A", orderable: false },
                 { data: 'Timestamp' },
                 { data: 'Pet Microchip Number' },
                 { data: 'Pet Owner Name / Authorized Handler' },
                 { data: 'Phone Number', className: 'phone_number' },
                 { data: 'Email Address', className: 'email_address' },
-                { data: 'Cell service provider' },
+                { data: 'Cell service provider', className: 'cell_provider' },
                 {
                     data: null,
                     className: "dt-center editor-email",
@@ -132,6 +133,12 @@
                     data: null,
                     className: "dt-center editor-sms",
                     defaultContent: '<i style="cursor: pointer;" class="fa fa-comment-alt" />',
+                    orderable: false
+                },
+                {
+                    data: null,
+                    className: "dt-center editor-sms-via-email",
+                    defaultContent: '<i style="cursor: pointer;" class="fa fa-comment" />',
                     orderable: false
                 }
             ],
@@ -182,6 +189,34 @@
                 cell.innerHTML = i + 1;
             });
         }).draw();
+
+        $('#example').on('click', 'td.editor-sms-via-email', function (e) {
+            e.preventDefault();
+
+            const phoneNumber = $(this).closest('tr').find('.phone_number');
+            const cellProvider = $(this).closest('tr').find('.cell_provider');
+
+            Swal.fire({
+                title: `Are you sure you want to send an SMS over email notification to "${phoneNumber.text()}"?`,
+                showDenyButton: true,
+                confirmButtonText: 'Send',
+                denyButtonText: `Don't send`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('SMS over email notification sent!', '', 'success');
+                    fetch('/smsoveremail', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ phoneNumber: phoneNumber.text(), cellProvider: cellProvider.text() })
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('SMS over email notification has not been sent', '', 'info');
+                }
+            });
+        });
 
         $('#example').on('click', 'td.editor-email', function (e) {
             e.preventDefault();
