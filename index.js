@@ -31,6 +31,7 @@ fs.readFile(CREDENTIALS_PATH, (err, content) => {
 });
 
 app.get('/data', async (req, res) => res.json(transformList(await listResponses(googleAuthClient))));
+app.post('/data', async (req, res) => res.json(transformList(await listResponses(googleAuthClient))));
 
 app.post('/notify', body('email').isEmail(), async (req, res) => {
   const { email } = req.body;
