@@ -25,9 +25,7 @@ Animal Quarantine is looking for a solution to assist with the heavy traffic and
 ### Overview Solution
 Pet owners can register through Google Forms and the Inspectors would match the pet microchip IDs against the owners.
 When a batch of pets are ready to be released, the matched owners will receive a text message via Email-To-SMS methods.
-When the owners arrive for the pickup, the Quarantine Admins will remove the person from the queue list.
-While on site, a TV screen will display the current queue.  So the owners can be asured they are being listed and an estimate on how long it takes to pickup the pet.
-Any persons who did not register through the forms will not be allowed to pickup their pets.
+When the owners arrive for the pickup, the Quarantine Admins will remove the person from the virtual waiting room.
 
 ### Technical Details 
 This repository hosts files needed to get the existing Pet Owner Form created from Google Spreadsheets.
