@@ -94,7 +94,10 @@
         });
 
         table = $('#example').DataTable({
-            dom: "Bfrtip",
+            dom: "PBfrtip",
+            searchPanes: {
+                threshold: 1
+            },
             ajax: {
                 url: '/data',
                 dataSrc: (data) => {
@@ -102,7 +105,7 @@
                     if (typeof deletedRows === 'string') {
                         deletedRows = JSON.parse(deletedRows);
                     }
-     
+
                     data = data.filter((e) => {
                         let deleted = false;
                         for (const deletedRow of deletedRows) {
@@ -151,7 +154,7 @@
                     text: 'Delete',
                     action: function (e, dt, node, config) {
                         var rows = table.rows({ selected: true }).indexes();
-                        var data = table.rows( rows ).data().toArray();
+                        var data = table.rows(rows).data().toArray();
                         localDeleteRows(data);
 
                         editor
@@ -271,6 +274,10 @@
                 }
             });
         });
+
+        setTimeout(() => {
+            table.ajax.reload(null, false); 
+        }, 500);
 
         setInterval(function () {
             table.ajax.reload(null, false);
